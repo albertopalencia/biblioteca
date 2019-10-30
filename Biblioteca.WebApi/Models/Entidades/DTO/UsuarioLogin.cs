@@ -1,4 +1,4 @@
-﻿namespace Biblioteca.WebApi.Models.Entidades
+﻿namespace Biblioteca.WebApi.Models.DTO
 {
     public class UsuarioLogin
     {

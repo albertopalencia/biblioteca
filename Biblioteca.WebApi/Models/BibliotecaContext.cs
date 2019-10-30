@@ -41,7 +41,7 @@ namespace Biblioteca.WebApi.Models
 
                 entity.Property(e => e.Nombre)
                     .IsRequired()
-                    .HasMaxLength(20)
+                    .HasMaxLength(50)
                     .IsUnicode(false);
             });
 
@@ -80,7 +80,7 @@ namespace Biblioteca.WebApi.Models
 
                 entity.Property(e => e.Nombre)
                     .IsRequired()
-                    .HasMaxLength(20)
+                    .HasMaxLength(150)
                     .IsUnicode(false);
             });
 

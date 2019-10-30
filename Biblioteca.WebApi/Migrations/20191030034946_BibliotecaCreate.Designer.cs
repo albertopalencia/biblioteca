@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Biblioteca.WebApi.Migrations
 {
     [DbContext(typeof(BibliotecaContext))]
-    [Migration("20191029054638_BibliotecaDB")]
-    partial class BibliotecaDB
+    [Migration("20191030034946_BibliotecaCreate")]
+    partial class BibliotecaCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,7 +36,7 @@ namespace Biblioteca.WebApi.Migrations
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasMaxLength(20)
+                        .HasMaxLength(50)
                         .IsUnicode(false);
 
                     b.HasKey("Id");
@@ -56,7 +56,7 @@ namespace Biblioteca.WebApi.Migrations
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasMaxLength(20)
+                        .HasMaxLength(150)
                         .IsUnicode(false);
 
                     b.HasKey("Id");

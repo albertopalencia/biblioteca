@@ -26,7 +26,7 @@ namespace Biblioteca.WebApi.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Apellidos")
-                        .HasMaxLength(100)
+                        .HasMaxLength(50)
                         .IsUnicode(false);
 
                     b.Property<DateTime?>("FechaNacimiento")
@@ -34,7 +34,7 @@ namespace Biblioteca.WebApi.Migrations
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasMaxLength(100)
+                        .HasMaxLength(50)
                         .IsUnicode(false);
 
                     b.HasKey("Id");
@@ -54,7 +54,7 @@ namespace Biblioteca.WebApi.Migrations
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasMaxLength(100)
+                        .HasMaxLength(150)
                         .IsUnicode(false);
 
                     b.HasKey("Id");

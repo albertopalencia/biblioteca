@@ -1,29 +1,20 @@
 ﻿using Biblioteca.WebApi.Models;
 using Biblioteca.WebApi.Models.IRepositorios;
 using Biblioteca.WebApi.Models.Repositorios;
-using log4net;
-using log4net.Config;
-using log4net.Repository.Hierarchy;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
-using System.IO;
-using System.Reflection;
-using System.Text;
-using ILoggerFactory = log4net.Repository.Hierarchy.ILoggerFactory;
 
 namespace Biblioteca.WebApi
 {
     public class Startup
     {
         public IConfiguration Configuration { get; }
+
 
         public Startup(IHostingEnvironment env)
         {
@@ -32,8 +23,10 @@ namespace Biblioteca.WebApi
            .AddEnvironmentVariables()
            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
-            var logRepo = LogManager.GetRepository(Assembly.GetEntryAssembly());
-            XmlConfigurator.Configure(logRepo, new FileInfo("log4net.config")); 
+            //logRepo = LogManager.GetRepository(Assembly.GetEntryAssembly());
+            //XmlConfigurator.Configure(logRepo, new FileInfo("log4net.config"));
+
+
 
             Configuration = builder.Build();
 
@@ -53,7 +46,7 @@ namespace Biblioteca.WebApi
                 });
             });
 
-
+            /*
             services.Configure<TokenManagement>(Configuration.GetSection("tokenManagement"));
             var token = Configuration.GetSection("tokenManagement").Get<TokenManagement>();
             var secret = Encoding.ASCII.GetBytes(token.Secret);
@@ -74,9 +67,11 @@ namespace Biblioteca.WebApi
                     ValidateAudience = false
                 };
             });
-
-
+            */
             services.AddSingleton<IRepositorioUsuario, RepositorioUsuario>();
+            services.AddSingleton<IRepositorioCategoria, RepositorioCategoria>();
+            services.AddSingleton<IRepositorioAutor, RepositorioAutor>();
+            services.AddSingleton<IRepositorioLibro, RepositorioLibro>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -86,17 +81,17 @@ namespace Biblioteca.WebApi
         }
 
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
 
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-            app.UseAuthentication();
+            //app.UseAuthentication();
             app.UseHttpsRedirection();
 
             app.UseSwagger();

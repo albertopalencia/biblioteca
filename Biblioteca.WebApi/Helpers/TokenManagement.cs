@@ -1,10 +1,6 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Biblioteca.WebApi.Models
+namespace Biblioteca.WebApi
 {
     [JsonObject("tokenManagement")]
     public class TokenManagement

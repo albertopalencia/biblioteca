@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Biblioteca.WebApi.Migrations
 {
-    public partial class BibliotecaDB : Migration
+    public partial class BibliotecaCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,8 +14,8 @@ namespace Biblioteca.WebApi.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Nombre = table.Column<string>(unicode: false, maxLength: 100, nullable: false),
-                    Apellidos = table.Column<string>(unicode: false, maxLength: 100, nullable: true),
+                    Nombre = table.Column<string>(unicode: false, maxLength: 50, nullable: false),
+                    Apellidos = table.Column<string>(unicode: false, maxLength: 50, nullable: true),
                     FechaNacimiento = table.Column<DateTime>(type: "datetime", nullable: true)
                 },
                 constraints: table =>
@@ -29,7 +29,7 @@ namespace Biblioteca.WebApi.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Nombre = table.Column<string>(unicode: false, maxLength: 100, nullable: false),
+                    Nombre = table.Column<string>(unicode: false, maxLength: 150, nullable: false),
                     Descripcion = table.Column<string>(unicode: false, maxLength: 255, nullable: true)
                 },
                 constraints: table =>
