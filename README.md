@@ -16,6 +16,7 @@ https://dotnet.microsoft.com/download/dotnet-core/2.2
 
 Una vez comprobado o instalado el framework procederemos con el siguiente paso.
 
+Modificar la cadena de conexion ubicada en el appsettings.json de nuestra aplicacion.
 
 Una vez descargado el proyecto , procederemos abrirlo en visual studio community, en mi caso tengo instalado el 2019.
 Necesitamos compilarlo para que nos restaure los paquetes y podamos correr nuestro proyecto y no genere errores.
