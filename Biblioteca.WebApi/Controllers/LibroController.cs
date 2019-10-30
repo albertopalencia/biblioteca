@@ -9,25 +9,26 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoriaController : ControllerBase
+    public class LibroController : ControllerBase
     {
-        readonly IRepositorioCategoria _repositorio;
-        public CategoriaController(IRepositorioCategoria repositorio)
+        readonly IRepositorioLibro _repositorio;
+        public LibroController(IRepositorioLibro repositorio)
         {
             _repositorio = repositorio;
         }
 
+        [AllowAnonymous]
         [HttpGet]
-        [Route("ListarCategorias")]
-        public async Task<IActionResult> ObtenerCategorias()
+        [Route("ListarLibros")]
+        public async Task<IActionResult> ObtenerLibros()
         {
             var respuesta = await _repositorio.GetAll();
             return Ok(respuesta);
         }
 
         [HttpPost]
-        [Route("PostCategoria")]
-        public async Task<IActionResult> GuardarCategoria([FromBody] Categoria entidad)
+        [Route("PostLibro")]
+        public async Task<IActionResult> GuardarLibro([FromBody] Libro entidad)
         {
             var respuesta = await _repositorio.Add(entidad);
             return Ok(respuesta);
@@ -35,16 +36,16 @@ namespace WebApi.Controllers
 
         
         [HttpPut]
-        [Route("PutCategoria")]
-        public async Task<IActionResult> EditarCategoria([FromBody] Categoria entidad)
+        [Route("PutLibro")]
+        public async Task<IActionResult> EditarLibro([FromBody] Libro entidad)
         {
             var respuesta = await _repositorio.Update(entidad);
             return Ok(respuesta);
         }
 
         [HttpDelete]
-        [Route("DeleteCategoria")]
-        public async Task<IActionResult> EliminarCategoria(Categoria entidad)
+        [Route("DeleteLibro")]
+        public async Task<IActionResult> EliminarLibro(Libro entidad)
         {
             var respuesta = await _repositorio.Delete(entidad);
             return Ok(respuesta);

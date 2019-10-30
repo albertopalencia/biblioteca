@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Biblioteca.WebApi.Controllers
 {
-    [Authorize]
+    
     [Route("api/[controller]")]
     [ApiController]
   

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Biblioteca.WebApi.Migrations
 {
     [DbContext(typeof(BibliotecaContext))]
-    [Migration("20191030034946_BibliotecaCreate")]
+    [Migration("20191030051537_BibliotecaCreate")]
     partial class BibliotecaCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

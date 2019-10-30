@@ -22,6 +22,7 @@ namespace Biblioteca.WebApi.Models.Repositorios
             try
             {
                 _ctx.Set<T>().Add(entity);
+                _ctx.SaveChanges();
                 return await Task.FromResult(true);
             }
             catch (Exception e)
@@ -73,6 +74,8 @@ namespace Biblioteca.WebApi.Models.Repositorios
             {
                 _ctx.Set<T>().Attach(entity);
                 _ctx.Entry(entity).State = EntityState.Modified;
+                _ctx.SaveChanges();
+
 
                 return await Task.FromResult(true);
             }
@@ -102,6 +105,7 @@ namespace Biblioteca.WebApi.Models.Repositorios
         public virtual async Task<bool> Delete(T entity)
         {
             _ctx.Set<T>().Remove(entity);
+            _ctx.SaveChanges();
             return await Task.FromResult(true);
         }
 

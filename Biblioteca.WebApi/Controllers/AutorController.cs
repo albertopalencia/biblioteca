@@ -9,25 +9,25 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoriaController : ControllerBase
+    public class AutorController : ControllerBase
     {
-        readonly IRepositorioCategoria _repositorio;
-        public CategoriaController(IRepositorioCategoria repositorio)
+        readonly IRepositorioAutor _repositorio;
+        public AutorController(IRepositorioAutor repositorio)
         {
             _repositorio = repositorio;
         }
 
         [HttpGet]
-        [Route("ListarCategorias")]
-        public async Task<IActionResult> ObtenerCategorias()
+        [Route("ListarAutores")]
+        public async Task<IActionResult> ObtenerAutores()
         {
             var respuesta = await _repositorio.GetAll();
             return Ok(respuesta);
         }
 
         [HttpPost]
-        [Route("PostCategoria")]
-        public async Task<IActionResult> GuardarCategoria([FromBody] Categoria entidad)
+        [Route("PostAutor")]
+        public async Task<IActionResult> GuardarAutor([FromBody] Autor entidad)
         {
             var respuesta = await _repositorio.Add(entidad);
             return Ok(respuesta);
@@ -35,16 +35,16 @@ namespace WebApi.Controllers
 
         
         [HttpPut]
-        [Route("PutCategoria")]
-        public async Task<IActionResult> EditarCategoria([FromBody] Categoria entidad)
+        [Route("PutAutor")]
+        public async Task<IActionResult> EditarAutor([FromBody] Autor entidad)
         {
             var respuesta = await _repositorio.Update(entidad);
             return Ok(respuesta);
         }
 
         [HttpDelete]
-        [Route("DeleteCategoria")]
-        public async Task<IActionResult> EliminarCategoria(Categoria entidad)
+        [Route("DeleteAutor")]
+        public async Task<IActionResult> EliminarAutor(Autor entidad)
         {
             var respuesta = await _repositorio.Delete(entidad);
             return Ok(respuesta);

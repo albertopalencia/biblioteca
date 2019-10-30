@@ -15,22 +15,16 @@ namespace Biblioteca.WebApi
     {
         public IConfiguration Configuration { get; }
 
-
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
            .SetBasePath(env.ContentRootPath)
            .AddEnvironmentVariables()
            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-
-            //logRepo = LogManager.GetRepository(Assembly.GetEntryAssembly());
-            //XmlConfigurator.Configure(logRepo, new FileInfo("log4net.config"));
-
-
-
             Configuration = builder.Build();
 
         }
+
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -67,16 +61,30 @@ namespace Biblioteca.WebApi
                     ValidateAudience = false
                 };
             });
-            */
-            services.AddSingleton<IRepositorioUsuario, RepositorioUsuario>();
-            services.AddSingleton<IRepositorioCategoria, RepositorioCategoria>();
-            services.AddSingleton<IRepositorioAutor, RepositorioAutor>();
-            services.AddSingleton<IRepositorioLibro, RepositorioLibro>();
 
+
+
+            
+             */
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddDbContext<BibliotecaContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("Biblioteca")));
+
+           
+            services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
+            services.AddScoped<IRepositorioCategoria, RepositorioCategoria>();
+            services.AddScoped<IRepositorioAutor, RepositorioAutor>();
+            services.AddScoped<IRepositorioLibro, RepositorioLibro>();
+
+            services.AddCors(o => o.AddPolicy("AllowClientApp", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
+
 
         }
 
@@ -104,6 +112,7 @@ namespace Biblioteca.WebApi
             });
 
             app.UseMvc();
+            app.UseCors("AllowClientApp");
         }
     }
 }
