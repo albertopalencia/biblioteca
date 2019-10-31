@@ -58,7 +58,7 @@ namespace WebApi.Controllers
             }
 
             var respuesta = await _repositorio.Delete(autor);
-            return Ok(respuesta);
+            return Ok(new { success = respuesta });
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Biblioteca.WebApi.Models;
 using Biblioteca.WebApi.Models.Entidades.DTO;
 using Biblioteca.WebApi.Models.IRepositorios;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,25 +22,37 @@ namespace WebApi.Controllers
         [Route("ListarLibros")]
         public async Task<IActionResult> ObtenerLibros([FromQuery] FiltroLibro entidad)
         {
-            var respuesta = await _repositorio.GetAll(s=> s.IdAutorNavigation, c=> c.IdCategoriaNavigation);
+            var respuesta = await _repositorio.GetAll(s => s.IdAutorNavigation, c => c.IdCategoriaNavigation);
 
             if (!string.IsNullOrWhiteSpace(entidad.Nombre))
             {
-                 respuesta =  respuesta.Where(s => s.Nombre.StartsWith(entidad.Nombre)).ToList();
+                respuesta = respuesta.Where(s => s.Nombre.StartsWith(entidad.Nombre)).ToList();
             }
 
             if (entidad.IdAutor != default)
             {
-                 respuesta = respuesta.Where(s => s.IdAutor == entidad.IdAutor).ToList();
+                respuesta = respuesta.Where(s => s.IdAutor == entidad.IdAutor).ToList();
             }
 
             if (entidad.IdCategoria != default)
             {
-                 respuesta = respuesta.Where(s =>  s.IdCategoria == entidad.IdCategoria).ToList();
+                respuesta = respuesta.Where(s => s.IdCategoria == entidad.IdCategoria).ToList();
             }
 
+            var listado = respuesta.
+                    Select(s => new
+                    {   
+                        s.Id,
+                        s.Nombre,
+                        s.IdAutor,
+                        s.IdCategoria,
+                        NombreAutor = s.IdAutorNavigation.Nombre,
+                        ApellidoAutor = s.IdAutorNavigation.Apellidos,
+                        Categoria = s.IdCategoriaNavigation.Nombre,
+                        s.Isnb
+                    }).ToList();
 
-            return Ok(respuesta.ToList());
+            return Ok(listado);
         }
 
         [HttpPost]
@@ -52,7 +63,7 @@ namespace WebApi.Controllers
             return Ok(respuesta);
         }
 
-            
+
         [HttpPut]
         [Route("PutLibro")]
         public async Task<IActionResult> EditarLibro([FromBody] Libro entidad)
@@ -73,7 +84,7 @@ namespace WebApi.Controllers
             }
 
             var respuesta = await _repositorio.Delete(libro);
-            return Ok(respuesta);
+            return Ok(new { success = respuesta });
         }
     }
 }
