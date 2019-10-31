@@ -3,7 +3,7 @@ using Biblioteca.WebApi.Models.IRepositorios;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-
+using System.Linq;
 
 namespace WebApi.Controllers
 {
@@ -44,9 +44,20 @@ namespace WebApi.Controllers
 
         [HttpDelete]
         [Route("DeleteAutor")]
-        public async Task<IActionResult> EliminarAutor(Autor entidad)
+        public async Task<IActionResult> EliminarAutor(int Id)
         {
-            var respuesta = await _repositorio.Delete(entidad);
+            Autor autor = await _repositorio.FindBy(a => a.Id == Id, s => s.Libro);
+            if (autor == null)
+            {
+                return Ok(new { success = false, mensaje = "No se pudo eliminar el autor, no existe el registro." });
+
+            }
+            else if (autor.Libro.Any())
+            {
+                return Ok(new { success = false, mensaje = "El autor tiene uno o varios libros asociados" });
+            }
+
+            var respuesta = await _repositorio.Delete(autor);
             return Ok(respuesta);
         }
     }

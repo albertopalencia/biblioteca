@@ -2,6 +2,7 @@
 using Biblioteca.WebApi.Models.IRepositorios;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 
 
@@ -44,9 +45,19 @@ namespace WebApi.Controllers
 
         [HttpDelete]
         [Route("DeleteCategoria")]
-        public async Task<IActionResult> EliminarCategoria(Categoria entidad)
+        public async Task<IActionResult> EliminarCategoria(int Id)
         {
-            var respuesta = await _repositorio.Delete(entidad);
+            Categoria categoria = await _repositorio.FindBy(c => c.Id == Id, s=> s.Libro);
+            if (categoria == null)
+            {
+                return Ok(new { success = false, mensaje = "No se pudo eliminar la categoria, no existe el registro." });
+
+            } else if(categoria.Libro.Any())
+            {
+                return Ok(new { success = false, mensaje = "La categoria tiene uno o varios libros asociados" });
+            }            
+
+            var respuesta = await _repositorio.Delete(categoria);
             return Ok(respuesta);
         }
     }

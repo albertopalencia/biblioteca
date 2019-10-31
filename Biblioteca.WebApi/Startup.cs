@@ -4,6 +4,7 @@ using Biblioteca.WebApi.Models.Repositorios;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -80,12 +81,15 @@ namespace Biblioteca.WebApi
 
             services.AddCors(o => o.AddPolicy("AllowClientApp", builder =>
             {
-                builder.AllowAnyOrigin()
+                builder.WithOrigins(Configuration["Origins"])
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             }));
 
-
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new CorsAuthorizationFilterFactory("AllowClientApp"));
+            });
         }
 
 
